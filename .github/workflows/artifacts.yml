@@ -1,1 +1,14 @@
-
+name: Syft and Grype
+ 
+on:
+  push:
+ 
+jobs:
+  syft:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create SBOM
+        uses: anchore/sbom-action@v0
+        with:
+          format: spdx-json
+          artifact-name: sbom.spdx.json
