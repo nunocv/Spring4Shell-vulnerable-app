@@ -1,7 +1,7 @@
 name: Syft and Grype
  
 on:
-  push:
+ push:
  
 jobs:
   syft:
