@@ -12,3 +12,23 @@ jobs:
         with:
           format: spdx-json
           artifact-name: sbom.spdx.json
+  grype:
+    runs-on: ubuntu-latest
+    needs: syft
+    steps:
+      - name: Download SBOM
+        uses: actions/download-artifact@v3
+        with:
+          name: "sbom.spdx.json"
+      - name: Scan SBOM
+        uses: anchore/scan-action@v3
+        id: scan
+        with:
+          sbom: "sbom.spdx.json"
+          output-format: json
+          fail-build: false
+      - name: Upload Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: results.json
+          path: ${{ steps.scan.outputs.json }}
