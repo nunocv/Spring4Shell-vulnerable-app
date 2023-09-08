@@ -32,3 +32,13 @@ jobs:
         with:
           name: results.json
           path: ${{ steps.scan.outputs.json }}
+  cat:
+    runs-on: ubuntu-latest
+    needs: grype
+    steps:
+      - name: Download Results
+        uses: actions/download-artifact@v3
+        with:
+          name: results.json
+      - name: Print
+        run: cat results.json
